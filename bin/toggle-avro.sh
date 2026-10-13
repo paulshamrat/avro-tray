@@ -40,7 +40,8 @@ esac
 
 # Auto-start avro-tray if not already running
 if ! pgrep -f "avro_tray" >/dev/null; then
-    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
+    SCRIPT_DIR="$(cd "$(dirname "${SCRIPT_PATH}")" && pwd)"
     if [ -x "${SCRIPT_DIR}/avro-tray" ]; then
         nohup "${SCRIPT_DIR}/avro-tray" >/dev/null 2>&1 &
     elif [ -x "${HOME}/.local/bin/avro-tray" ]; then
