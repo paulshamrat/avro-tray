@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Avro Tray Indicator
+GenericName=Input Method Indicator
+Comment=System tray indicator and fast switcher for Avro Keyboard
+Exec=avro-tray
+Icon=/usr/share/pixmaps/openbangla-keyboard.png
+Terminal=false
+Categories=Utility;Keyboard;
+StartupNotify=false
+X-GNOME-Autostart-enabled=true
