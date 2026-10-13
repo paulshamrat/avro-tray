@@ -27,7 +27,7 @@ ln -sf "${REPO_DIR}/bin/toggle-avro.sh" "${BIN_DIR}/toggle-avro.sh"
 
 # 4. Install Desktop Entries
 echo "==> Installing desktop shortcuts..."
-cp "${REPO_DIR}/assets/avro-tray.desktop" "${AUTOSTART_DIR}/avro-tray.desktop"
+rm -f "${AUTOSTART_DIR}/avro-tray.desktop"  # Systemd user service handles autostart; avoid duplicate startup
 cp "${REPO_DIR}/assets/avro-tray.desktop" "${APPS_DIR}/avro-tray.desktop"
 
 # 5. Install Systemd Service

@@ -7,13 +7,29 @@ import sys
 import os
 import signal
 import subprocess
+import fcntl
 from PyQt5 import QtWidgets, QtCore, QtNetwork
 
 from avro_tray.icons import get_english_icon, get_bangla_icon
 
+LOCK_PATH = f"/tmp/avro-tray-{os.getuid()}.lock"
 SOCKET_PATH = f"/tmp/avro-tray-{os.getuid()}.sock"
 DEFAULT_BN_ENGINE = "ibus-avro"
 ENGLISH_ENGINE = "xkb:us::eng"
+
+_lock_file = None
+
+
+def acquire_single_instance_lock() -> bool:
+    """Ensure only one instance runs per user session using an exclusive file lock."""
+    global _lock_file
+    try:
+        _lock_file = open(LOCK_PATH, "a+")
+        fcntl.flock(_lock_file.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        return True
+    except (IOError, OSError):
+        return False
+
 
 
 class SocketServer(QtCore.QObject):
@@ -215,9 +231,16 @@ class AvroTrayApp(QtWidgets.QApplication):
             self.switch_to_engine(self.current_bn_engine)
 
     def quit_app(self):
+        global _lock_file
         if os.path.exists(SOCKET_PATH):
             try:
                 os.remove(SOCKET_PATH)
+            except OSError:
+                pass
+        if _lock_file:
+            try:
+                fcntl.flock(_lock_file.fileno(), fcntl.LOCK_UN)
+                _lock_file.close()
             except OSError:
                 pass
         self.quit()
@@ -227,9 +250,14 @@ def main():
     signal.signal(signal.SIGINT, signal.SIG_DFL)
     signal.signal(signal.SIGTERM, signal.SIG_DFL)
 
+    if not acquire_single_instance_lock():
+        print("Avro Tray Indicator is already running. Exiting.", file=sys.stderr)
+        sys.exit(0)
+
     app = AvroTrayApp(sys.argv)
     sys.exit(app.exec_())
 
 
 if __name__ == "__main__":
     main()
+
