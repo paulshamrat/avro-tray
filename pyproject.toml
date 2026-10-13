@@ -8,8 +8,9 @@ version = "1.0.0"
 description = "A lightweight system tray indicator and fast switcher for Avro Keyboard on Linux (GNOME/Wayland/X11)"
 readme = "README.md"
 authors = [
-    { name = "Paul Shamrat", email = "shamrat@example.com" }
+    { name = "Shamrat Paul", email = "shamrap@clemson.edu" }
 ]
+urls = { "Homepage" = "https://github.com/paulshamrat/avro-tray", "Repository" = "https://github.com/paulshamrat/avro-tray" }
 license = { text = "MIT" }
 classifiers = [
     "Programming Language :: Python :: 3",

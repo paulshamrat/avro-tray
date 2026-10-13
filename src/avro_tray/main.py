@@ -214,10 +214,11 @@ class AvroTrayApp(QtWidgets.QApplication):
             is_bn = (target_engine != ENGLISH_ENGINE)
             title = "🇧🇩 বাংলা (Avro Phonetic)" if is_bn else "🇺🇸 English (US)"
             msg = "Keyboard set to বাংলা" if is_bn else "Keyboard set to English"
+            notify_icon = "/usr/share/pixmaps/openbangla-keyboard.png" if os.path.exists("/usr/share/pixmaps/openbangla-keyboard.png") else "input-keyboard"
             try:
                 subprocess.Popen(
                     ["notify-send", "-t", "1000", "-a", "Avro Keyboard",
-                     "-i", "/usr/share/pixmaps/openbangla-keyboard.png", title, msg],
+                     "-i", notify_icon, title, msg],
                     stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
                 )
             except Exception:

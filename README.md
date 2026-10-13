@@ -62,7 +62,7 @@ sudo apt install python3-pyqt5
 ### 2. Installation
 Clone the repository and run the installer:
 ```bash
-git clone https://github.com/your-username/avro-tray.git
+git clone https://github.com/paulshamrat/avro-tray.git
 cd avro-tray
 ./install.sh
 ```

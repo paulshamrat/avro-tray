@@ -19,7 +19,8 @@ rm -f "${HOME}/.local/share/applications/avro-tray.desktop"
 rm -f "${HOME}/.local/bin/avro-tray"
 rm -f "${HOME}/.local/bin/toggle-avro.sh"
 
-# 4. Remove socket if present
+# 4. Remove socket and lock if present
 rm -f "/tmp/avro-tray-${EUID}.sock"
+rm -f "/tmp/avro-tray-${EUID}.lock"
 
 echo "==> Avro Tray Indicator removed successfully."
